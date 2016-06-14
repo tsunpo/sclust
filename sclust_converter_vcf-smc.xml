@@ -1,5 +1,5 @@
 <tool id="sclust" name="Sclust 1 - VCF converter" version="0.1.0">                                       
-    <description>(SMC format)</description>                                                              
+    <description>(SMC)</description>                                                              
     <requirements>                                                                                       
         <container type="docker">r-base</container>                                                      
     </requirements>                                                                                      
@@ -7,7 +7,7 @@
         <exit_code range="1:"/>                                                                          
     </stdio>                                                                                             
     <command interpreter="Rscript">                                                                      
-        sclust_converter_vcf-smc.R                                                                       
+        sclust_converter_vcf-smc.R ${input_vcf}                                                                      
     </command>                                                                                           
     <inputs>                                                                                             
         <param format="vcf" name="input_vcf" type="data" label="VCF input" help=""/>
