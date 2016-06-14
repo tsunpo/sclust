@@ -61,5 +61,5 @@ if (length(readLines(sample)) != 0) {
    vcf$INFO <- paste(vcf$INFO, "FR=.", sep=";")
    vcf$INFO <- paste(vcf$INFO, "TG=.", sep=";")
 
-   write.table(vcf[,1:8], gzfile(paste(sample, ".gz", sep="")), col.names=names(vcf[,1:8]), row.names=F, quote=F, sep="\t")
+   write.table(vcf[,1:8], sample, col.names=names(vcf[,1:8]), row.names=F, quote=F, sep="\t")
 }
