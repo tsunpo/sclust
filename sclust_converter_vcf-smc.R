@@ -1,15 +1,15 @@
 # =============================================================================
 # Title: sclust_converter_vcf-smc.R
 # Author: Tsun-Po Yang (tyang2@uni-koeln.de)
-# Last Modified: 14/06/16
+# Last Modified: 15/06/16
 # =============================================================================
-source("the_daily_package.R")
 
 # -----------------------------------------------------------------------------
 # Sclust 1 - Generate converted VCFs (SMC-Het format)
 # -----------------------------------------------------------------------------
 initVCF <- function(tmp) { 
-   vcf <- toTable(".", 8, nrow(tmp), c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO"))
+   vcf <- data.frame(matrix(".", nrow(tmp), 8))
+   names(vcf) <- c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")
    
    vcf[,1] <- paste("chr", tmp$CHROM, sep="")
    vcf$POS <- tmp$POS
@@ -45,7 +45,7 @@ args <- commandArgs(T)
 sample <- args[1]
 
 if (length(readLines(sample)) != 0) {
-   tmp        <- readTable(sample, header=F, rownames=F, sep="\t")
+   tmp        <- read.table(sample, sep="\t", as.is=T, comment.char="#")
    names(tmp) <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", "NORMAL", "TUMOR")
    
    vcf <- initVCF(tmp)
@@ -61,5 +61,5 @@ if (length(readLines(sample)) != 0) {
    vcf$INFO <- paste(vcf$INFO, "FR=.", sep=";")   ## TO-DO
    vcf$INFO <- paste(vcf$INFO, "TG=.", sep=";")
 
-   writeTable(vcf, gzfile(paste(sample, ".gz", sep="")), colnames=T, rownames=F, sep="\t")
+   write.table(vcf[,1:8], gzfile(paste(sample, ".gz", sep="")), col.names=names(vcf[,1:8]), sep="\t")
 }
