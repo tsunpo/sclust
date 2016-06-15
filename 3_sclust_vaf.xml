@@ -10,8 +10,8 @@
         sclust_vaf.R ${vcf_sclust} ${cna_sclust} ${purity_smc}                                                                     
     </command>                                                                                           
     <inputs> 
-        <data format="vcf" name="vcf_sclust" label="VCF (Sclust format)" from_work_dir="sclust.vcf"/>                                                                                            
-        <data format="txt" name="cna_sclust" label="CNA (Sclust format)" from_work_dir="sclust.cna"/>
+        <param format="vcf" name="vcf_sclust" type="data" label="VCF (Sclust format)" help=""/>                                                                                            
+        <param format="txt" name="cna_sclust" type="data" label="CNA (Sclust format)" help=""/>
         <param format="txt" name="purity_smc" type="data" label="Purity (SMC-Het format)" help=""/>
     </inputs>                                                                                            
     <outputs>                                                                                                                            
