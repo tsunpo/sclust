@@ -14,14 +14,14 @@ initExpAF <- function(nrow) {
    return(expAF);
 }
 
-initExpAFfromSNV <- function(sample, snv.segment) { 
+initExpAFfromSNV <- function(snv.segment) { 
    expAF <- initExpAF(nrow(snv.segment))
    
    expAF$Chr <- snv.segment$CHROM[1]
    expAF$Position <- snv.segment$POS
    expAF$Wt  <- snv.segment$REF
    expAF$Mut <- snv.segment$ALT
-   expAF$Mut_ID <- paste(sample, paste(expAF$Chr, expAF$Position, sep=":"), "SNM", sep="_")
+   expAF$Mut_ID <- paste(paste(expAF$Chr, expAF$Position, sep=":"), "SNM", sep="_")
    
    ## VAFobs
    expAF$AF_obs <- mapply(v = 1:nrow(snv.segment), function(v) obsVAF(snv.segment$INFO[v]))
@@ -75,11 +75,11 @@ multiplicityHat <- function(majorCN, m) {
 
 multiplicityHatC2 <- function(theta1, m) {
    mHat <- 1
-   mHatPlusTheta1 <- mHat + theta1$cellular_prevalence
+   mHatPlusTheta1 <- mHat + theta1$clonal_frequency
    diff <- min(abs(m - mHat), abs(m - mHatPlusTheta1))
    
    for (mHat.tmp in 2:theta1$major_cn) {
-      mHatPlusTheta1.tmp <- mHat.tmp + theta1$cellular_prevalence
+      mHatPlusTheta1.tmp <- mHat.tmp + theta1$clonal_frequency
    	  diff.tmp <- min(abs(m - mHat.tmp), abs(m - mHatPlusTheta1.tmp))
    	  
    	  if (diff.tmp < diff) {
@@ -97,7 +97,7 @@ expVAF <- function(p, CN, mHat) {
 }
 
 expVAFC2 <- function(p, CN, mHatPlusTheta1, m, theta1) {
-   mHat <- mHatPlusTheta1 - theta1$cellular_prevalence
+   mHat <- mHatPlusTheta1 - theta1$clonal_frequency
    r <- mHat
    
    if (abs(m - mHatPlusTheta1) < abs(m - mHat))
@@ -127,7 +127,6 @@ args <- commandArgs(T)
 
 snv <- read.table(args[1], header=F, sep="\t", fill=T, as.is=T, comment.char="#")
 names(snv) <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")
-
 cna <- read.table(args[2], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
 
 purityploidy <- read.table(args[3], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
@@ -141,12 +140,12 @@ expAFs <- initExpAF(0)
 # -------------------------------------------------------
 cna.c1 <- cna[cna$clonal_frequency == 1,]
 
-for (y in 1:nrow(cna.c1)) {
-   segment <- cna.c1[y,]
+for (x in 1:nrow(cna.c1)) {
+   segment <- cna.c1[x,]
    snv.segment <- snvGetSegment(snv, segment$chromosome, segment$start, segment$end)
    	  
    if (nrow(snv.segment) != 0 && segment$copy_number != 0) {   ## ADDED 10/02/16: CN != 0
-   	  expAF <- initExpAFfromSNV(sample, snv.segment)
+   	  expAF <- initExpAFfromSNV(snv.segment)
    	  expAF$iCN <- segment$copy_number                         ## copy_number = minor_cn + major_cn
    	  
    	  ## VAFexp (c1)
@@ -170,9 +169,9 @@ if (nrow(cna.c2) != 0) {
       snv.segment <- snvGetSegment(snv, segment$chromosome[1], segment$start[1], segment$end[1])
    	     
    	  if (nrow(snv.segment) != 0 && segment$copy_number[1] != 0) {   ## ADDED 10/02/16: CN != 0 (Although seems not necessary)
-   	     expAF <- initExpAFfromSNV(sample, snv.segment)
+   	     expAF <- initExpAFfromSNV(snv.segment)
    	     expAF$Is_Subclonal_CN <- 1
-   	     expAF$iCN <- (segment$copy_number[1] * segment$cellular_prevalence[1]) + (segment$copy_number[2] * segment$cellular_prevalence[2])
+   	     expAF$iCN <- (segment$copy_number[1] * segment$clonal_frequency[1]) + (segment$copy_number[2] * segment$clonal_frequency[2])
    	     #expAF$iCN <- 4 * 0.235247 + 3 * 0.764753
    	  
    	     ## VAFexp (c2)
