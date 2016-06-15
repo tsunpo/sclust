@@ -5,7 +5,7 @@
 # =============================================================================
 
 # -----------------------------------------------------------------------------
-# Sclust 2 - CNA reader - Battenberg format
+# Sclust - 2. CNA reader - Preprocessing Battenberg format
 # -----------------------------------------------------------------------------
 initCNA <- function(sample.cna) { 
    cna <- data.frame(matrix(0, nrow(sample.cna), 7))

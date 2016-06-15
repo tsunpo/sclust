@@ -1,0 +1,20 @@
+<tool id="sclust_3" name="Sclust - 3. VAF" version="0.1.0">                                       
+    <description></description>                                                              
+    <requirements>                                                                                       
+        <container type="docker">r-base</container>                                                      
+    </requirements>                                                                                      
+    <stdio>                                                                                              
+        <exit_code range="3:"/>                                                                          
+    </stdio>                                                                                             
+    <command interpreter="Rscript">                                                                      
+        sclust_vaf.R ${vcf_sclust} ${cna_sclust} ${purity_smc}                                                                     
+    </command>                                                                                           
+    <inputs> 
+        <data format="vcf" name="vcf_sclust" label="VCF (Sclust format)" from_work_dir="sclust.vcf"/>                                                                                            
+        <data format="txt" name="cna_sclust" label="CNA (Sclust format)" from_work_dir="sclust.cna"/>
+        <param format="txt" name="purity_smc" type="data" label="Purity (SMC-Het format)" help=""/>
+    </inputs>                                                                                            
+    <outputs>                                                                                                                            
+    </outputs>                                                                                           
+    <help></help>                                                                                        
+</tool>
