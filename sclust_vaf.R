@@ -14,28 +14,28 @@ initExpAF <- function(nrow) {
    return(expAF);
 }
 
-initExpAFfromVCF <- function(sample, vcf.segment) { 
-   expAF <- initExpAF(nrow(vcf.segment))
+initExpAFfromSNV <- function(sample, snv.segment) { 
+   expAF <- initExpAF(nrow(snv.segment))
    
-   expAF$Chr <- vcf.segment$CHROM[1]
-   expAF$Position <- vcf.segment$POS
-   expAF$Wt  <- vcf.segment$REF
-   expAF$Mut <- vcf.segment$ALT
+   expAF$Chr <- snv.segment$CHROM[1]
+   expAF$Position <- snv.segment$POS
+   expAF$Wt  <- snv.segment$REF
+   expAF$Mut <- snv.segment$ALT
    expAF$Mut_ID <- paste(sample, paste(expAF$Chr, expAF$Position, sep=":"), "SNM", sep="_")
    
    ## VAFobs
-   expAF$AF_obs <- mapply(v = 1:nrow(vcf.segment), function(v) obsVAF(vcf.segment$INFO[v]))
-   expAF$Coverage <- mapply(v = 1:nrow(vcf.segment), function(v) coverage(vcf.segment$INFO[v]))
+   expAF$AF_obs <- mapply(v = 1:nrow(snv.segment), function(v) obsVAF(snv.segment$INFO[v]))
+   expAF$Coverage <- mapply(v = 1:nrow(snv.segment), function(v) coverage(snv.segment$INFO[v]))
 
    return(expAF);
 }
 
-vcfGetSegment <- function(vcf, chromosome, start, end) {
-   vcf.segment <- vcf[vcf$CHROM == paste("chr", chromosome, sep=""),]
-   vcf.segment <- vcf.segment[vcf.segment $POS >= start,]
-   vcf.segment <- vcf.segment[vcf.segment $POS <= end,]
+snvGetSegment <- function(snv, chromosome, start, end) {
+   snv.segment <- snv[snv$CHROM == paste("chr", chromosome, sep=""),]
+   snv.segment <- snv.segment[snv.segment$POS >= start,]
+   snv.segment <- snv.segment[snv.segment$POS <= end,]
    
-   return(vcf.segment);
+   return(snv.segment);
 }
 
 obsVAF <- function(format) {
@@ -106,6 +106,21 @@ expVAFC2 <- function(p, CN, mHatPlusTheta1, m, theta1) {
    return( round(p * r / ( 2*(1-p) + CN*p ), 7) );
 }
 
+cnaOrderByChromosome <- function(cna) {
+   cna.sort <- data.frame(matrix(NA, 0, ncol(cna)))
+   names(cna.sort) <- c("chromosome", "start", "end", "copy_number", "major_cn", "minor_cn", "clonal_frequency")
+   
+   chrs <- sort(unique(cna$chromosome))
+   for (i in 1:length(chrs)) {
+      cna.chr <- cna[cna$chromosome == chrs[i],]
+      cna.chr <- cna.chr[order(cna.chr$start, decreasing=F),]
+      
+      cna.sort <- rbind(cna.sort, cna.chr)
+   }
+   
+   return(cna.sort)
+}
+
 ##
 ## Main
 args <- commandArgs(T)
@@ -113,7 +128,7 @@ args <- commandArgs(T)
 snv <- read.table(args[1], header=F, sep="\t", fill=T, as.is=T, comment.char="#")
 names(snv) <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")
 
-segments <- read.table(args[2], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
+cna <- read.table(args[2], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
 
 purityploidy <- read.table(args[3], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
 purity <- purityploidy[1, 1]
@@ -124,20 +139,20 @@ expAFs <- initExpAF(0)
 # -------------------------------------------------------
 # 3.1 Calculate multiplicities in clonal SNVs
 # -------------------------------------------------------
-segments.c1 <- segments[segments$clonal_frequency == 1,]
+cna.c1 <- cna[cna$clonal_frequency == 1,]
 
-for (y in 1:nrow(segments.c1)) {
-   segment <- segments.c1[y,]
-   vcf.segment <- vcfGetSegment(snv, segment$chromosome, segment$start, segment$end)
+for (y in 1:nrow(cna.c1)) {
+   segment <- cna.c1[y,]
+   snv.segment <- snvGetSegment(snv, segment$chromosome, segment$start, segment$end)
    	  
-   if (nrow(vcf.segment) != 0 && segment$copy_number != 0) {   ## ADDED 10/02/16: CN != 0
-   	  expAF <- initExpAFfromVCF(sample, vcf.segment)
+   if (nrow(snv.segment) != 0 && segment$copy_number != 0) {   ## ADDED 10/02/16: CN != 0
+   	  expAF <- initExpAFfromSNV(sample, snv.segment)
    	  expAF$iCN <- segment$copy_number                         ## copy_number = minor_cn + major_cn
    	  
    	  ## VAFexp (c1)
-   	  expAF$Mut_Copies_Raw <- mapply(v = 1:nrow(vcf.segment), function(v) multiplicity(purity, expAF$iCN[v], expAF$AF_obs[v]))
-   	  expAF$Mut_Copies     <- mapply(v = 1:nrow(vcf.segment), function(v) multiplicityHat(segment$major_cn, expAF$Mut_Copies_Raw[v]))
-   	  expAF$AF_exp         <- mapply(v = 1:nrow(vcf.segment), function(v) expVAF(purity, expAF$iCN[v], expAF$Mut_Copies[v]))
+   	  expAF$Mut_Copies_Raw <- mapply(v = 1:nrow(snv.segment), function(v) multiplicity(purity, expAF$iCN[v], expAF$AF_obs[v]))
+   	  expAF$Mut_Copies     <- mapply(v = 1:nrow(snv.segment), function(v) multiplicityHat(segment$major_cn, expAF$Mut_Copies_Raw[v]))
+   	  expAF$AF_exp         <- mapply(v = 1:nrow(snv.segment), function(v) expVAF(purity, expAF$iCN[v], expAF$Mut_Copies[v]))
    	     
    	  expAFs <- rbind(expAFs, expAF)
    }
@@ -146,27 +161,28 @@ for (y in 1:nrow(segments.c1)) {
 # -------------------------------------------------------
 # 3.2 Calculate multiplicities in subclonal SNVs
 # -------------------------------------------------------
-segments.c2 <- segments[segments$clonal_frequency != 1,]
-      
-if (nrow(segments.c2) != 0) {
-   for (y in seq(1, nrow(segments.c2), 2)) {
-   	  segment <- segments.c2[c(y,y+1),]
-      vcf.segment <- vcfGetSegment(vcf, segment$chromosome[1], segment$start[1], segment$end[1])
+cna.c2 <- cna[cna$clonal_frequency != 1,]
+cna.c2 <- cnaOrderByChromosome(cna.c2)
+
+if (nrow(cna.c2) != 0) {
+   for (y in seq(1, nrow(cna.c2), 2)) {
+   	  segment <- cna.c2[c(y,y+1),]
+      snv.segment <- snvGetSegment(snv, segment$chromosome[1], segment$start[1], segment$end[1])
    	     
-   	  if (nrow(vcf.segment) != 0 && segment$copy_number[1] != 0) {   ## ADDED 10/02/16: CN != 0 (Although seems not necessary)
-   	     expAF <- initExpAFfromVCF(sample, vcf.segment)
+   	  if (nrow(snv.segment) != 0 && segment$copy_number[1] != 0) {   ## ADDED 10/02/16: CN != 0 (Although seems not necessary)
+   	     expAF <- initExpAFfromSNV(sample, snv.segment)
    	     expAF$Is_Subclonal_CN <- 1
    	     expAF$iCN <- (segment$copy_number[1] * segment$cellular_prevalence[1]) + (segment$copy_number[2] * segment$cellular_prevalence[2])
    	     #expAF$iCN <- 4 * 0.235247 + 3 * 0.764753
    	  
    	     ## VAFexp (c2)
-   	     expAF$Mut_Copies_Raw <- mapply(v = 1:nrow(vcf.segment), function(v) multiplicity(purity, expAF$iCN[v], expAF$AF_obs[v]))
+   	     expAF$Mut_Copies_Raw <- mapply(v = 1:nrow(snv.segment), function(v) multiplicity(purity, expAF$iCN[v], expAF$AF_obs[v]))
    	        
    	     theta1 <- segment[1,]
          if (theta1$copy_number < segment[2,]$copy_number)
             theta1 <- segment[2,]
-   	     expAF$Mut_Copies <- mapply(v = 1:nrow(vcf.segment), function(v) multiplicityHatC2(theta1, expAF$Mut_Copies_Raw[v]))
-   	     expAF$AF_exp     <- mapply(v = 1:nrow(vcf.segment), function(v) expVAFC2(purity, expAF$iCN[v], expAF$Mut_Copies[v], expAF$Mut_Copies_Raw[v], theta1))
+   	     expAF$Mut_Copies <- mapply(v = 1:nrow(snv.segment), function(v) multiplicityHatC2(theta1, expAF$Mut_Copies_Raw[v]))
+   	     expAF$AF_exp     <- mapply(v = 1:nrow(snv.segment), function(v) expVAFC2(purity, expAF$iCN[v], expAF$Mut_Copies[v], expAF$Mut_Copies_Raw[v], theta1))
    	     
    	     expAFs <- rbind(expAFs, expAF)
    	  }
