@@ -41,6 +41,7 @@ initCNA2 <- function(sample.cna2) {
 }
 
 ##
+## Main
 args <- commandArgs(T)
 sample <- args[1]
 
@@ -53,5 +54,5 @@ if (length(readLines(sample)) != 0) {
    sample.cna2 <- subset(sample.cna, frac1_A != 1)
    cna <- rbind(cna, initCNA2(sample.cna2))
 
-   write.table(cna, "sclust.cna", col.names=names(cna), row.names=F, quote=F, sep="\t")
+   write.table(cna, "sclust.txt", col.names=names(cna), row.names=F, quote=F, sep="\t")
 }

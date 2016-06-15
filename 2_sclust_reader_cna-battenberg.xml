@@ -13,7 +13,7 @@
         <param format="txt" name="cna_battenberg" type="data" label="CNA (Battenberg format)" help=""/>
     </inputs>                                                                                            
     <outputs>                                                                                            
-        <data format="txt" name="cna_sclust" label="CNA (Sclust format)" from_work_dir="sclust.cna"/>                                  
+        <data format="txt" name="cna_sclust" label="CNA (Sclust format)" from_work_dir="sclust.txt"/>                                  
     </outputs>                                                                                           
     <help></help>                                                                                        
 </tool>

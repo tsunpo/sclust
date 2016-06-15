@@ -5,24 +5,24 @@
 # =============================================================================
 
 # -----------------------------------------------------------------------------
-# Sclust - 1. SNV reader - Preprocessing SMC-Het format VCF
+# Sclust - 1. SNV reader - Preprocessing SMC-Het format
 # -----------------------------------------------------------------------------
-initVCF <- function(sample.snv) { 
-   vcf <- data.frame(matrix(".", nrow(sample.snv), 8))
-   names(vcf) <- c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")
+initSNV <- function(sample.snv) { 
+   snv <- data.frame(matrix(".", nrow(sample.snv), 8))
+   names(snv) <- c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")
    
-   vcf[,1] <- paste("chr", sample.snv$CHROM, sep="")
-   vcf$POS <- sample.snv$POS
-   vcf$ID  <- sample.snv$ID
-   vcf$REF <- sample.snv$REF
-   vcf$ALT <- sample.snv$ALT
-   vcf$QUAL   <- 255
-   vcf$FILTER <- "PASS"
+   snv[,1] <- paste("chr", sample.snv$CHROM, sep="")
+   snv$POS <- sample.snv$POS
+   snv$ID  <- sample.snv$ID
+   snv$REF <- sample.snv$REF
+   snv$ALT <- sample.snv$ALT
+   snv$QUAL   <- 255
+   snv$FILTER <- "PASS"
    
-   return(vcf);
+   return(snv);
 }
 
-vcfInfoDP <- function(format) {
+snvInfoDP <- function(format) {
    format1 <- unlist(strsplit(format, ":"))
    format2 <- unlist(strsplit(format1[2], ","))
    ref <- as.numeric(format2[1])
@@ -31,7 +31,7 @@ vcfInfoDP <- function(format) {
    return(alt + ref)
 }
 
-vcfInfoAF <- function(format) {
+snvInfoAF <- function(format) {
    format1 <- unlist(strsplit(format, ":"))
    format2 <- unlist(strsplit(format1[2], ","))
    ref <- as.numeric(format2[1])
@@ -41,6 +41,7 @@ vcfInfoAF <- function(format) {
 }
 
 ##
+## Main
 args <- commandArgs(T)
 sample <- args[1]
 
@@ -48,18 +49,18 @@ if (length(readLines(sample)) != 0) {
    sample.snv <- read.table(sample,  header=F, sep="\t", fill=T, as.is=T, comment.char="#")
    names(sample.snv) <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", "NORMAL", "TUMOR")
    
-   vcf <- initVCF(sample.snv)
+   snv <- initSNV(sample.snv)
    ## Read depth
-   vcf$INFO <- paste("DP=", mapply(v = 1:nrow(vcf), function(v) vcfInfoDP(sample.snv[v, 11])), sep="")
-   vcf$INFO <- paste(vcf$INFO, "DP_N=.", sep=";")
+   snv$INFO <- paste("DP=", mapply(v = 1:nrow(snv), function(v) snvInfoDP(sample.snv[v, 11])), sep="")
+   snv$INFO <- paste(snv$INFO, "DP_N=.", sep=";")
    
    ## AF
-   vcf$INFO <- paste(vcf$INFO, paste("AF=", mapply(v = 1:nrow(vcf), function(v) vcfInfoAF(sample.snv[v, 11])), sep=""), sep=";")
-   vcf$INFO <- paste(vcf$INFO, "AF_N=.", sep=";")
+   snv$INFO <- paste(snv$INFO, paste("AF=", mapply(v = 1:nrow(snv), function(v) snvInfoAF(sample.snv[v, 11])), sep=""), sep=";")
+   snv$INFO <- paste(snv$INFO, "AF_N=.", sep=";")
    
    ## FR and TG   
-   vcf$INFO <- paste(vcf$INFO, "FR=.", sep=";")
-   vcf$INFO <- paste(vcf$INFO, "TG=.", sep=";")
+   snv$INFO <- paste(snv$INFO, "FR=.", sep=";")
+   snv$INFO <- paste(snv$INFO, "TG=.", sep=";")
 
-   write.table(vcf[,1:8], "sclust.vcf", col.names=names(vcf[,1:8]), row.names=F, quote=F, sep="\t")
+   write.table(snv[,1:8], "sclust.vcf", col.names=names(snv[,1:8]), row.names=F, quote=F, sep="\t")
 }

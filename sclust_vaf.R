@@ -110,7 +110,7 @@ expVAFC2 <- function(p, CN, mHatPlusTheta1, m, theta1) {
 ## Main
 args <- commandArgs(T)
 
-vcf <- read.table(args[1], header=F, sep="\t", fill=T, as.is=T, comment.char="#")
+snv <- read.table(args[1], header=F, sep="\t", fill=T, as.is=T, comment.char="#")
 names(snv) <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")
 
 segments <- read.table(args[2], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
@@ -128,7 +128,7 @@ segments.c1 <- segments[segments$clonal_frequency == 1,]
 
 for (y in 1:nrow(segments.c1)) {
    segment <- segments.c1[y,]
-   vcf.segment <- vcfGetSegment(vcf, segment$chromosome, segment$start, segment$end)
+   vcf.segment <- vcfGetSegment(snv, segment$chromosome, segment$start, segment$end)
    	  
    if (nrow(vcf.segment) != 0 && segment$copy_number != 0) {   ## ADDED 10/02/16: CN != 0
    	  expAF <- initExpAFfromVCF(sample, vcf.segment)

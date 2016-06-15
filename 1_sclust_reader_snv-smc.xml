@@ -7,13 +7,13 @@
         <exit_code range="1:"/>                                                                          
     </stdio>                                                                                             
     <command interpreter="Rscript">                                                                      
-        sclust_reader_snv-smc.R ${vcf_smc}                                                                      
+        sclust_reader_snv-smc.R ${snv_smc}                                                                      
     </command>                                                                                           
     <inputs>                                                                                             
-        <param format="vcf" name="vcf_smc" type="data" label="VCF (SMC-Het format)" help=""/>
+        <param format="vcf" name="snv_smc" type="data" label="SNV (SMC-Het format)" help=""/>
     </inputs>
     <outputs>
-        <data format="vcf" name="vcf_sclust" label="VCF (Sclust format)" from_work_dir="sclust.vcf"/>                                  
+        <data format="vcf" name="snv_sclust" label="SNV (Sclust format)" from_work_dir="sclust.vcf"/>                                  
     </outputs>                                                                                           
     <help></help>                                                                                        
 </tool>

@@ -7,10 +7,10 @@
         <exit_code range="3:"/>                                                                          
     </stdio>                                                                                             
     <command interpreter="Rscript">                                                                      
-        sclust_vaf.R ${vcf_sclust} ${cna_sclust} ${purity_smc}                                                                     
+        sclust_vaf.R ${snv_sclust} ${cna_sclust} ${purity_smc}                                                                     
     </command>                                                                                           
     <inputs> 
-        <param format="vcf" name="vcf_sclust" type="data" label="VCF (Sclust format)" help=""/>                                                                                            
+        <param format="vcf" name="snv_sclust" type="data" label="SNV (Sclust format)" help=""/>                                                                                            
         <param format="txt" name="cna_sclust" type="data" label="CNA (Sclust format)" help=""/>
         <param format="txt" name="purity_smc" type="data" label="Purity (SMC-Het format)" help=""/>
     </inputs>                                                                                            
