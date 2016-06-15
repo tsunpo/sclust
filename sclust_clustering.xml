@@ -1,0 +1,23 @@
+<tool id="sclust_4" name="Sclust - 4. Mutational clustering" version="0.1.0">                                       
+    <description></description>                                                              
+    <requirements>                                                                                       
+        <container type="docker">sclust:msc-het</container>                                                      
+    </requirements>                                                                                      
+    <stdio>                                                                                              
+        <exit_code range="4:"/>                                                                          
+    </stdio>                                                                                             
+    <command>                                                                      
+        <![CDATA[
+        sclust_vaf.R ${snv_sclust} ${cna_sclust} ${purity_smc}
+	    ]]>                                                                 
+    </command>                                                                                           
+    <inputs> 
+        <param format="vcf" name="snv_sclust" type="data" label="SNV (Sclust format)" help=""/>                                                                                            
+        <param format="txt" name="cna_sclust" type="data" label="CNA (Sclust format)" help=""/>
+        <param format="txt" name="purity_smc" type="data" label="Purity (SMC-Het format)" help=""/>
+    </inputs>                                                                                            
+    <outputs>                                                                                                                            
+        <data format="txt" name="sclust_expAF" label="VAF (Sclust format)" from_work_dir="sclust_muts_expAF.txt"/>
+    </outputs>                                                                                           
+    <help></help>                                                                                        
+</tool>
