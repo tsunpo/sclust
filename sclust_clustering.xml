@@ -1,0 +1,23 @@
+<tool id="sclust_4" name="Sclust - 4. Mutational clustering" version="0.1.0">                                       
+    <description></description>                                                              
+    <requirements>                                                                                       
+        <container type="docker">sclust:smchet</container>                                                      
+    </requirements>                                                                                      
+    <stdio>                                                                                              
+        <exit_code range="4:"/>                                                                          
+    </stdio>                                                                                             
+    <command>                                                                      
+        <![CDATA[
+        Sclust/Sclust ${sclust_muts_expAF}
+	    ]]>                                                   
+    </command>                                                                                           
+    <inputs> 
+        <param format="txt" name="sclust_muts_expAF" type="data" label="Sclust VAF (TXT)" help=""/>
+    </inputs>                                                                                            
+    <outputs>                                                                                                                            
+        <data format="pdf" name="sclust_mcluster.pdf" label="Sclust mcluster (PDF)" from_work_dir="sclust_mcluster.pdf"/>
+        <data format="txt" name="sclust_cluster_assignments" label="Sclust cluster assignments (TXT)" from_work_dir="sclust_cluster_assignments.txt"/>
+        <data format="txt" name="sclust_mclusters" label="Sclust mclusters (TXT)" from_work_dir="sclust_mclusters.txt"/>
+    </outputs>
+    <help></help>                                                                                        
+</tool>
