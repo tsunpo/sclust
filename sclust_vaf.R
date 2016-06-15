@@ -107,22 +107,23 @@ expVAFC2 <- function(p, CN, mHatPlusTheta1, m, theta1) {
 }
 
 ##
+## Main
 args <- commandArgs(T)
 
-vcf <- read.table(args[1],  header=F, sep="\t", fill=T, as.is=T, comment.char="#")
+vcf <- read.table(args[1], header=F, sep="\t", fill=T, as.is=T, comment.char="#")
 names(snv) <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")
 
 segments <- read.table(args[2], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
 
-#purities <- readTable("/ngs/ngs4/ICGC_PanCancer/Results/Release_05/cna/consensus_purities.20160319.txt", header=T, rownames=1, sep="\t")
-#purity <- purities[sample, 2]
-   
+purityploidy <- read.table(args[3], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
+purity <- purityploidy[1, 1]
+
 ## Output file *_muts_expAF.txt
 expAFs <- initExpAF(0)
 
-## -------------------------------------------------------
-## 1.1 Calculate multiplicities in clonal SNVs
-## -------------------------------------------------------
+# -------------------------------------------------------
+# 3.1 Calculate multiplicities in clonal SNVs
+# -------------------------------------------------------
 segments.c1 <- segments[segments$clonal_frequency == 1,]
 
 for (y in 1:nrow(segments.c1)) {
@@ -142,9 +143,9 @@ for (y in 1:nrow(segments.c1)) {
    }
 }
 
-## -------------------------------------------------------
-## 1.2 Calculate multiplicities in subclonal SNVs
-## -------------------------------------------------------
+# -------------------------------------------------------
+# 3.2 Calculate multiplicities in subclonal SNVs
+# -------------------------------------------------------
 segments.c2 <- segments[segments$clonal_frequency != 1,]
       
 if (nrow(segments.c2) != 0) {
@@ -171,4 +172,5 @@ if (nrow(segments.c2) != 0) {
    	  }
    }
 }
-writeTable(expAFs, paste(vaf.wd, "/", sample, "_muts_expAF.txt", sep=""), colnames=T, rownames=F, sep="\t")
+
+write.table(expAFs, "sclust_muts_expAF.txt", col.names=names(expAFs), row.names=F, quote=F, sep="\t")
