@@ -4,7 +4,7 @@
         <container type="docker">sclust:smchet</container>                                                      
     </requirements>                                                                                      
     <stdio>                                                                                              
-        <exit_code range="4:"/>                                                                          
+        <exit_code range="1:"/>                                                                          
     </stdio>                                                                                             
     <command>
         #if str($sclust_vaf) != 'None':                                                              

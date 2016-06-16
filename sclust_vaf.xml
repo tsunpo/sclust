@@ -4,9 +4,9 @@
         <container type="docker">r-base</container>                                                      
     </requirements>                                                                                      
     <stdio>                                                                                              
-        <exit_code range="3:"/>                                                                          
+        <exit_code range="1:"/>                                                                          
     </stdio>                                                                                             
-    <command interpreter="Rscript">                                                                      
+    <command interpreter="Rscript">
         sclust_vaf.R ${snv_sclust} ${cna_sclust} ${purity_smc}                                                                     
     </command>                                                                                           
     <inputs> 
