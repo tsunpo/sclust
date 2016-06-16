@@ -8,7 +8,7 @@
     </stdio>                                                                                             
     <command>                                                                      
         <![CDATA[
-        Sclust/Sclust ${sclust_muts_expAF}
+        ./Sclust ${sclust_muts_expAF} sclust
 	    ]]>                                                   
     </command>                                                                                           
     <inputs> 
