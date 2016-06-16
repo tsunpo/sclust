@@ -1,15 +1,15 @@
-<tool id="sclust_5" name="Sclust - 5. Generating report" version="0.1.0">                                       
+<tool id="sclust_5" name="Sclust - 5. Report" version="0.1.0">                                       
     <description> - SMC-Het</description>                                                              
     <requirements>                                                                                       
         <container type="docker">r-base</container>                                                      
-    </requirements>                                                                                      
+    </requirements>                                   
     <stdio>                                                                                              
         <exit_code range="1:"/>                                                                          
-    </stdio>                                                                                             
+    </stdio>            
     <command interpreter="Rscript">                                                                      
-        sclust_smc-het.R ${snv_smc}                                                           
-    </command>                                                                                           
-    <inputs>                                                                                             
+        sclust_smc-het.R ${sclust_mclusters} ${sclust_cluster_assignments}
+    </command>
+    <inputs>
         <param format="txt" name="sclust_cluster_assignments" type="data" label="Sclust cluster assignments (TXT)" help=""/>
         <param format="txt" name="sclust_mclusters" type="data" label="Sclust mclusters (TXT)" help=""/>
     </inputs>

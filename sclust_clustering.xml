@@ -17,7 +17,7 @@
         <param format="txt" name="sclust_vaf" type="data" label="Sclust VAF (TXT)" help=""/>
     </inputs>                                                                                            
     <outputs>                                                                                                                            
-        <data format="pdf" name="sclust_mcluster.pdf" label="Sclust mcluster (PDF)" from_work_dir="sclust_mcluster.pdf"/>
+        <data format="pdf" name="sclust_mcluster" label="Sclust mcluster (PDF)" from_work_dir="sclust_mcluster.pdf"/>
         <data format="txt" name="sclust_cluster_assignments" label="Sclust cluster assignments (TXT)" from_work_dir="sclust_cluster_assignments.txt"/>
         <data format="txt" name="sclust_mclusters" label="Sclust mclusters (TXT)" from_work_dir="sclust_mclusters.txt"/>
     </outputs>
