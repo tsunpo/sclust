@@ -1,7 +1,7 @@
 <tool id="sclust_4" name="Sclust - 4. Mutational clustering" version="0.1.0">                                       
     <description></description>                                                              
     <requirements>                                                                                       
-        <container type="docker">r-base</container>                                                      
+        <container type="docker">sclust-smc-het</container>                                                      
     </requirements>                                                                                      
     <stdio>                                                                                              
         <exit_code range="1:"/>                                                                          
