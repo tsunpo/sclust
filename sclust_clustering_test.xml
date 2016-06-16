@@ -9,7 +9,7 @@
     <command>
         #if str($sclust_vaf) != 'None':                                                              
         <![CDATA[
-        ./Sclust ${sclust_vaf} sclust
+        Sclust ${sclust_vaf} sclust
         ]]>
         #end if                                                 
     </command>                                                                                           
