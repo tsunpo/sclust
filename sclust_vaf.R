@@ -1,5 +1,6 @@
 # =============================================================================
-# Title: sclust_vaf.R
+# Title: Sclust submission to the SMC-Het Challenge
+# Name: sclust_vaf.R
 # Author: Tsun-Po Yang (tyang2@uni-koeln.de)
 # Last Modified: 15/06/16
 # =============================================================================
@@ -21,7 +22,7 @@ initExpAFfromSNV <- function(snv.segment) {
    expAF$Position <- snv.segment$POS
    expAF$Wt  <- snv.segment$REF
    expAF$Mut <- snv.segment$ALT
-   expAF$Mut_ID <- paste(paste(expAF$Chr, expAF$Position, sep=":"), "SNM", sep="_")
+   expAF$Mut_ID <- paste(paste(expAF$Chr, expAF$Position, sep=":"), "SNM", sep="_")   ## TO-DO
    
    ## VAFobs
    expAF$AF_obs <- mapply(v = 1:nrow(snv.segment), function(v) obsVAF(snv.segment$INFO[v]))
@@ -136,7 +137,7 @@ purity <- purityploidy[1, 1]
 expAFs <- initExpAF(0)
 
 # -------------------------------------------------------
-# 3.1 Calculate multiplicities in clonal SNVs
+# 3.1 Calculating multiplicities in clonal SNVs
 # -------------------------------------------------------
 cna.c1 <- cna[cna$clonal_frequency == 1,]
 
@@ -158,7 +159,7 @@ for (x in 1:nrow(cna.c1)) {
 }
 
 # -------------------------------------------------------
-# 3.2 Calculate multiplicities in subclonal SNVs
+# 3.2 Calculating multiplicities in subclonal SNVs
 # -------------------------------------------------------
 cna.c2 <- cna[cna$clonal_frequency != 1,]
 cna.c2 <- cnaOrderByChromosome(cna.c2)
@@ -178,7 +179,7 @@ if (nrow(cna.c2) != 0) {
    	     expAF$Mut_Copies_Raw <- mapply(v = 1:nrow(snv.segment), function(v) multiplicity(purity, expAF$iCN[v], expAF$AF_obs[v]))
    	        
    	     theta1 <- segment[1,]
-         if (theta1$copy_number < segment[2,]$copy_number)
+   	     if (theta1$copy_number < segment[2,]$copy_number)
             theta1 <- segment[2,]
    	     expAF$Mut_Copies <- mapply(v = 1:nrow(snv.segment), function(v) multiplicityHatC2(theta1, expAF$Mut_Copies_Raw[v]))
    	     expAF$AF_exp     <- mapply(v = 1:nrow(snv.segment), function(v) expVAFC2(purity, expAF$iCN[v], expAF$Mut_Copies[v], expAF$Mut_Copies_Raw[v], theta1))

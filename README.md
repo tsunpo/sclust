@@ -1,2 +1,2 @@
-# Sclust (SMC-Het Challenge)
-/opt/galaxy/tools/sclust-smc-het
+# sclust
+Sclust (SMC-Het Challenge)

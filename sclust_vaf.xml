@@ -12,7 +12,7 @@
     <inputs> 
         <param format="vcf" name="snv_sclust" type="data" label="SNV (Sclust format)" help=""/>                                                                                            
         <param format="txt" name="cna_sclust" type="data" label="CNA (Sclust format)" help=""/>
-        <param format="txt" name="purity_smc" type="data" label="Purity (SMC-Het format)" help=""/>
+        <param format="txt" name="purity_smc-het" type="data" label="Purity (SMC-Het format)" help=""/>
     </inputs>                                                                                            
     <outputs>                                                                                                                            
         <data format="txt" name="sclust_expAF" label="Sclust VAF (TXT)" from_work_dir="sclust_muts_expAF.txt"/>
