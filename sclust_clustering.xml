@@ -1,15 +1,17 @@
 <tool id="sclust_4" name="Sclust - 4. Mutational clustering" version="0.1.0">                                       
     <description></description>                                                              
     <requirements>                                                                                       
-        <container type="docker">sclust</container>                                                      
+        <container type="docker">sclust:smchet</container>                                                      
     </requirements>                                                                                      
     <stdio>                                                                                              
         <exit_code range="4:"/>                                                                          
     </stdio>                                                                                             
-    <command>                                                                      
+    <command>
+        #if str($sclust_vaf) != 'None':                                                              
         <![CDATA[
         ./Sclust ${sclust_vaf} sclust
-        ]]>                                                   
+        ]]>
+        #end if                                                 
     </command>                                                                                           
     <inputs> 
         <param format="txt" name="sclust_vaf" type="data" label="Sclust VAF (TXT)" help=""/>
