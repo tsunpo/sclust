@@ -1,7 +1,7 @@
 <tool id="sclust_4" name="Sclust - 4. Mutational clustering" version="0.1.0">                                       
     <description></description>                                                              
     <requirements>                                                                                       
-        <container type="docker">sclust:smchet</container>                                                      
+        <container type="docker">sclust</container>                                                      
     </requirements>                                                                                      
     <stdio>                                                                                              
         <exit_code range="4:"/>                                                                          
@@ -9,7 +9,7 @@
     <command>                                                                      
         <![CDATA[
         ./Sclust ${sclust_vaf} sclust
-	    ]]>                                                   
+        ]]>                                                   
     </command>                                                                                           
     <inputs> 
         <param format="txt" name="sclust_vaf" type="data" label="Sclust VAF (TXT)" help=""/>
