@@ -47,7 +47,7 @@ args <- commandArgs(T)
 sample <- args[1]
 
 if (length(readLines(sample)) != 0) {
-   sample.snv <- read.table(sample,  header=F, sep="\t", fill=T, as.is=T, comment.char="#")
+   sample.snv <- read.table(sample, header=F, sep="\t", fill=T, as.is=T, comment.char="#")
    names(sample.snv) <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", "NORMAL", "TUMOR")
    
    snv <- initSNV(sample.snv)
