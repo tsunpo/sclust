@@ -1,5 +1,5 @@
 # =============================================================================
-# Title: Sclust submission to the SMC-Het Challenge
+# Title: Sclust for the SMC-Het Challenge
 # Name: sclust_vaf.R
 # Author: Tsun-Po Yang (tyang2@uni-koeln.de)
 # Last Modified: 15/06/16
