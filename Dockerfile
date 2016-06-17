@@ -3,9 +3,9 @@ FROM ubuntu
 # File Author / Maintainer
 MAINTAINER Tsun-Po Yang <tyang2@uni-koeln.de>
 
-WORKDIR /opt
-
 RUN apt-get update && apt-get install -y r-base-core
 
-ADD /opt/galaxy/tools/sclust-smc-het/inst_qp.R /opt/inst_qp.R
-RUN R BATCH -f /opt/inst_qp.R
+WORKDIR /opt
+
+RUN git clone https://github.com/tsunpo/sclust-smc-het.git
+RUN cd sclust-smc-het && R BATCH -f install_quadprog.R
