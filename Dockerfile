@@ -7,5 +7,3 @@ RUN apt-get update \
 make gcc build-essential
 
 WORKDIR /opt
-
-RUN git clone https://github.com/tsunpo/sclust-smc-het.git && cd sclust-smc-het && git checkout smchet
