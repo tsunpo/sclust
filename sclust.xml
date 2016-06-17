@@ -1,16 +1,14 @@
 <tool id="sclust_4" name="Sclust - 4. Mutational clustering" version="0.1.0">                                       
     <description></description>                                                              
     <requirements>                                                                                       
-        <container type="docker">sclust-smc-het:smchet</container>                                                      
+        <container type="docker">sclust:smchet</container>                                                      
     </requirements>                                                                                      
     <stdio>                                                                                              
         <exit_code range="1:"/>                                                                          
-    </stdio>                                                                                             
-    <command>                                                            
-        <![CDATA[
-        Sclust ${sclust_vaf} sclust
-        ]]>                                               
-    </command>                                                                                           
+    </stdio>                                                                             
+    <command><![CDATA[
+        ./Sclust ${sclust_vaf} sclust
+    ]]></command>                                                                                           
     <inputs> 
         <param format="txt" name="sclust_vaf" type="data" label="Sclust VAF (TXT)" help=""/>
     </inputs>                                                                                            
