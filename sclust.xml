@@ -7,7 +7,7 @@
         <exit_code range="1:"/>                                                                          
     </stdio>                                                                             
     <command><![CDATA[
-        Sclust ${sclust_vaf} sclust
+        /opt/galaxy/tools/sclust-smc-het/Sclust ${sclust_vaf} sclust
     ]]></command>                                                                                           
     <inputs> 
         <param format="txt" name="sclust_vaf" type="data" label="Sclust VAF (TXT)" help=""/>
