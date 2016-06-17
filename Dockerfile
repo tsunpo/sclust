@@ -3,7 +3,7 @@ FROM ubuntu
 # File Author / Maintainer
 MAINTAINER Tsun-Po Yang <tyang2@uni-koeln.de>
 
-RUN apt-get update && apt-get install -y r-base-core
+RUN apt-get update && apt-get install -y r-base-core git wget
 
 WORKDIR /opt
 
