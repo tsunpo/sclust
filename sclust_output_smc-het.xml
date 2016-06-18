@@ -1,0 +1,22 @@
+<tool id="sclust_5" name="Sclust - 5. Output" version="0.1.0">                                       
+    <description> - SMC-Het</description>                                                              
+    <requirements>                                                                                       
+        <container type="docker">r-base</container>                                                      
+    </requirements>                                   
+    <stdio>                                                                                              
+        <exit_code range="1:"/>                                                                          
+    </stdio>            
+    <command interpreter="Rscript">                                                                      
+        sclust_output_smc-het.R ${sclust_mclusters} ${sclust_cluster_assignments}
+    </command>
+    <inputs>
+        <param format="txt" name="sclust_mclusters" type="data" label="Sclust mclusters" help=""/>
+        <param format="txt" name="sclust_cluster_assignments" type="data" label="Sclust cluster assignments" help=""/>
+    </inputs>
+    <outputs>
+        <data format="txt" name="no_clusters" label="Number clusters (Challenge 1B)" from_work_dir="sclust_1B.txt"/>
+        <data format="txt" name="proportions" label="Cluster proportions (Challenge 1C)" from_work_dir="sclust_1C.txt"/>
+        <data format="txt" name="assignments" label="Cluster assignments (Challenge 2A)" from_work_dir="sclust_2A.txt"/>                                
+    </outputs>
+    <help></help>           
+</tool>

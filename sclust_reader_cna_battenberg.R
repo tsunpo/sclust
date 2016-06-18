@@ -45,6 +45,7 @@ initCNA2 <- function(sample.cna2) {
 ## Main
 args <- commandArgs(T)
 sample <- args[1]
+sample <- "/Users/tpyang/Work/dev/galaxy/Imported Data/Tumour6/Tumour6.battenberg.txt"
 
 if (length(readLines(sample)) != 0) {
    sample.cna <- read.table(sample, header=T, sep="\t", fill=T, as.is=T, comment.char="#")

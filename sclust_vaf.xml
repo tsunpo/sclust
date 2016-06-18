@@ -1,5 +1,5 @@
 <tool id="sclust_3" name="Sclust - 3. VAF" version="0.1.0">                                       
-    <description></description>                                                              
+    <description> - Fraction of cancer cells</description>                                                              
     <requirements>                                                                                       
         <container type="docker">r-base</container>                                                      
     </requirements>                                                                                      
@@ -7,15 +7,15 @@
         <exit_code range="1:"/>                                                                          
     </stdio>                                                                                             
     <command interpreter="Rscript">
-        sclust_vaf.R ${snv_sclust} ${cna_sclust} ${purity_smc}                                                                     
+        sclust_vaf.R ${snv_sclust} ${cna_sclust} ${cellularity}                                                                     
     </command>                                                                                           
     <inputs> 
         <param format="vcf" name="snv_sclust" type="data" label="SNV (Sclust format)" help=""/>                                                                                            
         <param format="txt" name="cna_sclust" type="data" label="CNA (Sclust format)" help=""/>
-        <param format="txt" name="purity_smc" type="data" label="Purity (SMC-Het format)" help=""/>
+        <param format="txt" name="cellularity" type="data" label="Cellularity" help=""/>
     </inputs>                                                                                            
     <outputs>                                                                                                                            
-        <data format="txt" name="sclust_vaf" label="Sclust VAF (TXT)" from_work_dir="sclust_muts_expAF.txt"/>
+        <data format="txt" name="sclust_vaf" label="Sclust VAF" from_work_dir="sclust_muts_expAF.txt"/>
     </outputs>                                                                                           
     <help></help>                                                                                        
 </tool>
