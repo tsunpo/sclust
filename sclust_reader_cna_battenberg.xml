@@ -1,5 +1,5 @@
 <tool id="sclust_2" name="Sclust - 2. CNA" version="0.1.0">                                       
-    <description> - Battenberg reader</description>                                                              
+    <description> - Battenberg</description>                                                              
     <requirements>                                                                                       
         <container type="docker">r-base</container>                                                      
     </requirements>                                                                                      
