@@ -8,4 +8,4 @@ RUN apt-get update && apt-get install -y gfortran build-essential make gcc git w
 WORKDIR /opt
 
 RUN git clone https://github.com/tsunpo/sclust-smc-het.git
-RUN cd sclust-smc-het && R BATCH -f install_packages.R
+RUN cd sclust-smc-het && chmod 777 Sclust && R BATCH -f install_packages.R
