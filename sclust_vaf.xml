@@ -1,4 +1,4 @@
-<tool id="sclust_3" name="Sclust - 3) Fraction of cancer cells" version="0.1.0">                                       
+<tool id="sclust_3" name="Sclust 3 - Fraction of cancer cells" version="0.1.0">                                       
     <description></description>                                                              
     <requirements>                                                                                       
         <container type="docker">r-base</container>                                                      

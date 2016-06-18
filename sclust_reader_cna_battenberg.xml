@@ -1,4 +1,4 @@
-<tool id="sclust_2" name="Sclust - 2) CNA - Battenberg" version="0.1.0">                                       
+<tool id="sclust_2" name="Sclust 2 - CNA - Battenberg" version="0.1.0">                                       
     <description></description>                                                              
     <requirements>                                                                                       
         <container type="docker">r-base</container>                                                      
