@@ -45,7 +45,6 @@ snvInfoAF <- function(format) {
 ## Main
 args <- commandArgs(T)
 sample <- args[1]
-sample <- "/Users/tpyang/Work/dev/galaxy/Imported Data/Tumour4/Tumour4.mutect.vcf"
 
 if (length(readLines(sample)) != 0) {
    sample.snv <- read.table(sample, header=F, sep="\t", fill=T, as.is=T, comment.char="#")

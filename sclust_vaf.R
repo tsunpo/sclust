@@ -131,8 +131,6 @@ names(snv) <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")
 cna <- read.table(args[2], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
 
 purityploidy <- read.table(args[3], header=T, sep="\t", fill=T, as.is=T, comment.char="#")
-names(snv) <- c("CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO")
-purityploidy <- read.table("/Users/tpyang/Work/dev/galaxy/Imported Data/Tumour6/Tumour6.cellularity.ploidy.txt", header=T, sep="\t", fill=T, as.is=T, comment.char="#")
 purity <- purityploidy[1, 1]
 
 ## Output file *_muts_expAF.txt
