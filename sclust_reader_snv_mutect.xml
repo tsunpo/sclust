@@ -10,10 +10,10 @@
         sclust_reader_snv_mutect.R ${snv_mutect}                                                           
     </command>                                                                                           
     <inputs>                                                                                             
-        <param format="vcf" name="snv_mutect" type="data" label="SNV (MuTect format)" help=""/>
+        <param format="vcf" name="snv_mutect" type="data" label="MuTect SNV" help=""/>
     </inputs>
     <outputs>
-        <data format="vcf" name="snv_sclust" label="SNV (Sclust format)" from_work_dir="sclust.vcf"/>                                  
+        <data format="vcf" name="snv_sclust" label="Sclust SNV" from_work_dir="sclust.vcf"/>                                  
     </outputs>                                                                                           
     <help></help>                                                                                        
 </tool>

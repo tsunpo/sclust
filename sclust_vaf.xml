@@ -10,8 +10,8 @@
         sclust_vaf.R ${snv_sclust} ${cna_sclust} ${cellularity}                                                                     
     </command>                                                                                           
     <inputs> 
-        <param format="vcf" name="snv_sclust" type="data" label="SNV (Sclust format)" help=""/>                                                                                            
-        <param format="txt" name="cna_sclust" type="data" label="CNA (Sclust format)" help=""/>
+        <param format="vcf" name="snv_sclust" type="data" label="Sclust SNV" help=""/>                                                                                            
+        <param format="txt" name="cna_sclust" type="data" label="Sclust CNA" help=""/>
         <param format="txt" name="cellularity" type="data" label="Cellularity" help=""/>
     </inputs>                                                                                            
     <outputs>                                                                                                                            

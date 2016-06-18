@@ -14,9 +14,9 @@
         <param format="txt" name="sclust_cluster_assignments" type="data" label="Sclust cluster assignments" help=""/>
     </inputs>
     <outputs>
-        <data format="txt" name="no_clusters" label="Number clusters (Challenge 1B)" from_work_dir="sclust_1B.txt"/>
-        <data format="txt" name="proportions" label="Cluster proportions (Challenge 1C)" from_work_dir="sclust_1C.txt"/>
-        <data format="txt" name="assignments" label="Cluster assignments (Challenge 2A)" from_work_dir="sclust_2A.txt"/>                                
+        <data format="txt" name="no_clusters" label="Number of clusters (1B)" from_work_dir="sclust_1B.txt"/>
+        <data format="txt" name="proportions" label="Cluster proportions (1C)" from_work_dir="sclust_1C.txt"/>
+        <data format="txt" name="assignments" label="Cluster assignments (2A)" from_work_dir="sclust_2A.txt"/>                                
     </outputs>
     <help></help>           
 </tool>
