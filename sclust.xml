@@ -1,4 +1,4 @@
-<tool id="sclust_4" name="Sclust - 4  Mutational clustering" version="0.1.0">                                       
+<tool id="sclust_4" name="Sclust - 4) Mutational clustering" version="0.1.0">                                       
     <description></description>                                                              
     <requirements>                                                                                       
         <container type="docker">sclust</container>                                                      
