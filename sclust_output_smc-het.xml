@@ -1,5 +1,5 @@
-<tool id="sclust_5" name="Sclust - 5: Output" version="0.1.0">                                       
-    <description> - SMC-Het</description>                                                              
+<tool id="sclust_5" name="Sclust - 5: Output - SMC-Het" version="0.1.0">                                       
+    <description></description>                                                              
     <requirements>                                                                                       
         <container type="docker">r-base</container>                                                      
     </requirements>                                   
