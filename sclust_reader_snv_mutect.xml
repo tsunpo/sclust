@@ -1,5 +1,5 @@
-<tool id="sclust_1" name="Sclust - 1. SNV" version="0.1.0">                                       
-    <description> - MuTect</description>                                                              
+<tool id="sclust_1" name="Sclust - 1  SNV - MuTect" version="0.1.0">                                       
+    <description></description>                                                              
     <requirements>                                                                                       
         <container type="docker">r-base</container>                                                      
     </requirements>                                                                                      
