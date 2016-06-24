@@ -27,10 +27,13 @@ write.table(nrow(mclusters), "sclust_1B.txt", col.names=F, row.names=F, quote=F,
 ## 1C
 c1 <- mclusters[, c(1,4,2)]
 c1.tmp <- c(nrow(mclusters), length(positions) - nrow(assignments), 0)
-
 c1 <- rbind(c1, c1.tmp)
 c1[,1] <- c1[,1] + 1
 
+for (i in 1:nrow(c1))
+   if (c1[i, 3] > 1)   ## If CCF > 1, set to 1
+      c1[i, 3] = 1
+      
 write.table(c1, "sclust_1C.txt", col.names=F, row.names=F, quote=F, sep="\t")
 
 ## 2A
