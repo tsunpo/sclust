@@ -7,11 +7,12 @@
         <exit_code range="1:"/>                                                                          
     </stdio>            
     <command interpreter="Rscript">                                                                      
-        sclust_output_smc-het.R ${sclust_mclusters} ${sclust_cluster_assignments}
+        sclust_output_smc-het.R ${sclust_mclusters} ${sclust_cluster_assignments} ${sclust_position}
     </command>
     <inputs>
         <param format="txt" name="sclust_mclusters" type="data" label="Sclust mclusters" help=""/>
         <param format="txt" name="sclust_cluster_assignments" type="data" label="Sclust cluster assignments" help=""/>
+        <param format="txt" name="sclust_position" type="data" label="Original SNV position" help=""/>
     </inputs>
     <outputs>
         <data format="txt" name="no_clusters" label="Number of clusters (1B)" from_work_dir="sclust_1B.txt"/>

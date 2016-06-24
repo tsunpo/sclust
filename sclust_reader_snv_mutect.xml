@@ -13,7 +13,8 @@
         <param format="vcf" name="snv_mutect" type="data" label="MuTect SNV" help=""/>
     </inputs>
     <outputs>
-        <data format="vcf" name="snv_sclust" label="Sclust SNV" from_work_dir="sclust.vcf"/>                                  
+        <data format="vcf" name="snv_sclust" label="Sclust SNV" from_work_dir="sclust.vcf"/>                                
+        <data format="txt" name="sclust_position" label="Original SNV positions" from_work_dir="sclust_position.txt"/>  
     </outputs>                                                                                           
     <help></help>                                                                                        
 </tool>

@@ -22,7 +22,7 @@ initExpAFfromSNV <- function(snv.segment) {
    expAF$Position <- snv.segment$POS
    expAF$Wt  <- snv.segment$REF
    expAF$Mut <- snv.segment$ALT
-   expAF$Mut_ID <- paste(paste(expAF$Chr, expAF$Position, sep=":"), "SNM", sep="_")   ## TO-DO
+   expAF$Mut_ID <- paste(expAF$Chr, expAF$Position, sep=":")
    
    ## VAFobs
    expAF$AF_obs <- mapply(v = 1:nrow(snv.segment), function(v) obsVAF(snv.segment$INFO[v]))

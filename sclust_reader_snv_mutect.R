@@ -64,4 +64,5 @@ if (length(readLines(sample)) != 0) {
    snv$INFO <- paste(snv$INFO, "TG=.", sep=";")
 
    write.table(snv[,1:8], "sclust.vcf", col.names=names(snv[,1:8]), row.names=F, quote=F, sep="\t")
+   write.table(paste(snv[,1], snv[,2], sep=":"), "sclust_position.txt", col.names=F, row.names=F, quote=F, sep="\t")
 }
