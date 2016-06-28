@@ -1,5 +1,5 @@
 # =============================================================================
-# Title: Sclust (for the SMC-Het Challenge)
+# Title: Sclust (SMC-Het Challenge) from Peifer Lab
 # Name: sclust_output_smc-het.R
 # Author: Tsun-Po Yang (tyang2@uni-koeln.de)
 # Last Modified: 17/06/16
